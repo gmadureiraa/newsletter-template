@@ -27,14 +27,39 @@ const instrumentSerif = Instrument_Serif({
 
 const isV0 = process.env["VERCEL_URL"]?.includes("vusercontent.net") ?? false
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000")
+
+const siteName = "Synecdoche®"
+const siteDescription =
+  "Stay updated with the latest news and exclusive content. Subscribe to the newsletter and never miss out on new drops."
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
-    template: "%s | Synecdoche®",
-    default: "Synecdoche®",
+    template: `%s | ${siteName}`,
+    default: siteName,
   },
-  description:
-    "We stand at the forefront of a new era, where creativity meets technology to redefine what's possible. Our mission is to empower individuals and businesses alike with groundbreaking solutions that inspire change and drive progress.",
-    generator: 'v0.app'
+  description: siteDescription,
+  openGraph: {
+    type: "website",
+    url: siteUrl,
+    siteName,
+    title: siteName,
+    description: siteDescription,
+    images: ["/opengraph-image.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteName,
+    description: siteDescription,
+    images: ["/opengraph-image.png"],
+  },
+  icons: {
+    icon: "/favicon.ico",
+  },
+  generator: "v0.app",
 }
 
 export default function RootLayout({
